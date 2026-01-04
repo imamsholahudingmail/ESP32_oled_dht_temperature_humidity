@@ -1,2 +1,5 @@
-# ESP32_oled_dht_temperature_humidity
-Proyek ESP32 OLED DHT Temperature &amp; Humidity merupakan sistem monitoring suhu dan kelembapan udara berbasis mikrokontroler ESP32 yang menggunakan sensor DHT (DHT11/DHT22) sebagai input dan layar OLED.  Proyek ini dapat dikembangkan lebih lanjut menjadi sistem monitoring berbasis Internet of Things (IoT).
+Proyek ESP32 OLED DHT Temperature & Humidity merupakan sistem monitoring suhu dan kelembapan udara berbasis mikrokontroler ESP32 yang menggunakan sensor DHT (DHT11/DHT22) sebagai input dan layar OLED sebagai media tampilan data. Sistem ini dirancang untuk menampilkan nilai suhu dan kelembapan secara real-time, akurat, dan mudah dibaca.
+
+ESP32 berperan sebagai pusat pengolah data yang membaca nilai dari sensor DHT, kemudian memproses dan menampilkannya ke layar OLED melalui komunikasi I2C. Selain itu, ESP32 memiliki keunggulan konektivitas Wi-Fi dan Bluetooth, sehingga proyek ini dapat dikembangkan lebih lanjut menjadi sistem monitoring berbasis Internet of Things (IoT).
+
+Proyek ini bertujuan untuk melatih peserta didik dalam memahami konsep sensor digital, komunikasi I2C, penggunaan library Arduino, serta penerapan mikrokontroler dalam kehidupan sehari-hari, seperti pemantauan kondisi ruangan, laboratorium, server room, atau greenhouse. Dengan proyek ini, siswa diharapkan mampu mengintegrasikan perangkat keras dan perangkat lunak secara efektif serta meningkatkan keterampilan pemrograman dan pemecahan masalah.
