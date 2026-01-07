@@ -1,6 +1,7 @@
 /*********
   Rui Santos
   Complete project details at https://randomnerdtutorials.com  
+  Kode ini dimodifikasi dan disesuaikam
 *********/
 
 #include <Wire.h>
@@ -23,12 +24,15 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 //#define DHTTYPE    DHT21     // DHT 21 (AM2301)
 
 const int soilMoisturePin = 34; // Sensor's AOUT pin connected to GPIO 34
+const int relayPin1 = 18; // Ganti dengan pin GPIO yang Anda gunakan
+const int relayPin2 = 19; // Ganti dengan pin GPIO yang Anda gunakan
 
 DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   Serial.begin(115200);
-
+  pinMode(relayPin1, OUTPUT); // Atur pin relay sebagai output
+  pinMode(relayPin2, OUTPUT); // Atur pin relay sebagai output
   dht.begin();
 
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
@@ -46,7 +50,14 @@ void loop() {
   //read temperature and humidity
   float t = dht.readTemperature();
   float h = dht.readHumidity();
-  int rawValue = analogRead(soilMoisturePin); 
+  //read soil humidity
+  //int sensorValue = analogRead(soilMoisturePin); 
+  //int sensorValue = map(analogRead(soilMoisturePin), 1400, 4095, 0, 100);
+  // Membaca nilai dari sensor (misal: 1400 saat basah, 4095 saat kering)
+  // Membalikkan nilai: 0 menjadi 100, dan 100 menjadi 0
+  int sensorValue = map(analogRead(soilMoisturePin), 1400, 4095, 100, 0);
+
+     
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
   }
@@ -82,8 +93,28 @@ void loop() {
   display.print("Kelembaban Tanah: ");
   display.setTextSize(1);
   display.setCursor(0, 52);
-  display.print(rawValue);
+  display.print(sensorValue);
   display.print(" %"); 
 
   display.display(); 
+
+  // Nyalakan Relay 1 dan Relay 2 bila kelembaban kurang dari 50%
+  if (sensorValue <50)
+  {
+    digitalWrite(relayPin1, LOW);  
+    digitalWrite(relayPin2, LOW);
+  }
+  // Nyalakan Relay 1 bila kelembaban kurang dari 85%
+  else if (sensorValue <85)
+  {
+    digitalWrite(relayPin1, LOW);  
+    digitalWrite(relayPin2, HIGH);
+  }
+  // Matikan Relay 1 dan Relay 2 bila kelembaban samadengan atau lebih dari 85%
+  else if (sensorValue >=85)
+  {
+    digitalWrite(relayPin1, HIGH);  
+    digitalWrite(relayPin2, HIGH);
+  }
+
 }
